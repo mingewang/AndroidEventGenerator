@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.lambdainvoker.LambdaFunction;
+import com.amazonaws.mobileconnectors.lambdainvoker.LambdaFunctionException;
 import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.regions.Regions;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String COGNITO_ROLE_AUTH = "arn:aws:iam::509113609899:role/Cognito_comriteAuth_Role";
     public static final String COGNTIO_ROLE_UNAUTH = "arn:aws:iam::509113609899:role/Cognito_comriteUnauth_Role";
 
-    LambdaFunctionsInterface myInterface;
+
 
 
     // To use Lambda, first define methods in an interface (a placeholder)
@@ -73,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
 // You can provide your own data binder by implementing
 // LambdaDataBinder.
 
-        //final LambdaFunctionsInterface myInterface = factory.build(LambdaFunctionsInterface.class);
-        myInterface = factory.build(LambdaFunctionsInterface.class);
+        final LambdaFunctionsInterface myInterface = factory.build(LambdaFunctionsInterface.class);
 
 // The Lambda function invocation results in a network call.
 // Make sure it is not called from the main thread.
@@ -84,11 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 // invoke "echo" method. In case it fails, it will throw a
                 // LambdaFunctionException.
                 try {
-                    String ret = myInterface.localFunction(params[0]);
+                    return myInterface.localFunction(params[0]);
 
-                    return ret;
-             //   } catch (LambdaFunctionException lfe) {
-                  } catch (Exception lfe) {
+                } catch (LambdaFunctionException lfe) {
                     Log.e("Tag", "Failed to invoke echo", lfe);
                     return null;
                 }
