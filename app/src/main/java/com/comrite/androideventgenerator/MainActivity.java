@@ -36,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Invoke lambda function "cloudFunction" (name of the function to be called in this app: localFunction
          */
-      //  @LambdaFunction(functionName="cloudFunction") //this is defined in Lambda in the cloud using the Management Console.
-       // String localFunction(String nameInfo);
+      @LambdaFunction(functionName="cloudFunction") //this is defined in Lambda in the cloud using the Management Console.
+       String localFunction(String nameInfo);
 
-        @LambdaFunction //this is defined in Lambda in the cloud using the Management Console.
-        String cloudFunction(String nameInfo);
         //Add more Lambda functions here
     }
 
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 // invoke "echo" method. In case it fails, it will throw a
                 // LambdaFunctionException.
                 try {
-                    String ret = myInterface.cloudFunction(params[0]);
+                    String ret = myInterface.localFunction(params[0]);
 
                     return ret;
              //   } catch (LambdaFunctionException lfe) {
